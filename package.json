@@ -3,19 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
     "@metamask/detect-provider": "^1.2.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "babel-preset-env": "^1.7.0",
     "formik": "^2.2.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "regenerator-runtime": "^0.13.9",
     "styled-components": "^5.3.1",
     "web3": "^1.5.2"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "ie 8"
+            ]
+          }
+        }
+      ]
+    ]
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,6 +52,12 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
     "parcel-bundler": "^1.12.4"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
+    ]
   }
 }
