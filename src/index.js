@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import 'regenerator-runtime/runtime'
+import "babel-polyfill"
 
 // Find all widget divs
 const WidgetDivs = document.querySelectorAll('.elysPaymentGateway')
