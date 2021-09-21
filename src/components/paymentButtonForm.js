@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { Formik, Field, Form, ErrorMessage } from "formik"
 import styled from "styled-components"
+import elysBrown from '../pay-with-elys-brown.png'
+import elysOrange from '../pay-with-elys-orange.png'
+import elysWhite from '../pay-with-elys-white.png'
 
 const encode = data => {
   return Object.keys(data)
@@ -10,9 +13,19 @@ const encode = data => {
 
 const generateButton = (data, setField) => {
   console.log(data)
-  setField("code", "<p>This</p>")
+  let code = '<link href="https://cdn.jsdelivr.net/gh/mattbloem007/elys-payment-widget@main/docs/index.css” rel="stylesheet” />\n<script src="https://cdn.jsdelivr.net/gh/mattbloem007/elys-payment-widget@main/docs/index.js"></script>\n<div class="elysPaymentGateway" data-price="' + data.price + '" product-title="' + data.product_name + '" merchant-wallet="' + data.walletAddress + '" button-color="' + data.elysButton +  '" ></div>'
+  console.log(code)
+  localStorage.setItem("ButtonCode", code)
+  setField("code", code)
 
 
+}
+
+const copyToClipboard = () => {
+  //navigator.clipboard.writeText(copyText.value);
+  let code = localStorage.getItem('ButtonCode')
+  console.log("CODDE" , code)
+  navigator.clipboard.writeText(code);
 }
 
 
@@ -53,6 +66,27 @@ function ButtonForm() {
         <Field type="hidden" name="form-name" />
         <Field type="hidden" name="bot-field" />
 
+        <SacramentSymbolsContainer>
+          <Flex role="group" aria-labelledby="my-radio-group">
+            <Label>
+              <SacramentSymbol src={elysWhite} />
+              <Field type="radio" name="elysButton" value="White" />
+              White
+            </Label>
+            <Label>
+              <SacramentSymbol src={elysOrange} />
+              <Field type="radio" name="elysButton" value="Orange" />
+              Orange
+            </Label>
+            <Label>
+              <SacramentSymbol src={elysBrown} />
+              <Field type="radio" name="elysButton" value="Brown" />
+              Brown
+            </Label>
+          </Flex>
+        </SacramentSymbolsContainer>
+        <br />
+
         <Flex>
           <Label htmlFor="product_name">Item Name</Label>
             <Field name="product_name" placeholder="The Name of Item" type="text" style={{background: "#FACBAC 0% 0% no-repeat padding-box", border: "2px solid #ED6F1B", borderRadius: "30px", width: "223px", height: "33px", paddingLeft: "10px"}}/>
@@ -91,6 +125,10 @@ function ButtonForm() {
           <Label htmlFor="code" style={{paddingRight: "50px"}}>Website Code</Label>
             <Field as="textarea" name="code" type="text" style={{background: "#FACBAC 0% 0% no-repeat padding-box", border: "2px solid #ED6F1B", borderRadius: "30px", width: "317px", height: "180px", paddingLeft: "10px", paddingTop: "10px"}}/>
           <ErrorMessage name="code" />
+        </Flex>
+        <br/>
+        <Flex>
+          <Submit onClick={() => copyToClipboard()} style={{color: "white", float: "right"}}>Copy to Clipboard</Submit>
         </Flex>
         <br/>
       </Form>
@@ -246,4 +284,25 @@ const FeatureItem = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`
+
+const SacramentSymbolsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 570px) {
+    padding-right: 5px;
+  }
+`
+
+const SacramentSymbol = styled.img`
+  height: 40px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+  padding-right: 30px;
+
+  @media (max-width: 570px) {
+    padding-right: 5px;
+  }
 `

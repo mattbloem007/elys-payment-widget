@@ -10,7 +10,7 @@ function App({ domElement }) {
     <p>
           My favorite price is /r/{price}
     </p>
-      <Main />
+      <Main domElement={domElement}/>
     </div>
   );
 }
