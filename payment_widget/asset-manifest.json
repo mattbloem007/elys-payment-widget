@@ -1,0 +1,10 @@
+{
+  "main.css": "/static/css/widget.css",
+  "main.js": "/static/js/widget.js",
+  "main.js.map": "/static/js/widget.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.fe39bf7f561c6bff08118ed62dcc3975.js": "/precache-manifest.fe39bf7f561c6bff08118ed62dcc3975.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/widget.css.map": "/static/css/widget.css.map",
+  "static/js/widget.js.LICENSE.txt": "/static/js/widget.js.LICENSE.txt"
+}
