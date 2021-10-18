@@ -7,7 +7,7 @@ import "core-js/stable";
 
 
 // Find all widget divs
-const WidgetDivs = document.querySelectorAll('.reddit_widget')
+const WidgetDivs = document.querySelectorAll('.elysPaymentGateway')
 
 // Inject our React App into each
 WidgetDivs.forEach(Div => {

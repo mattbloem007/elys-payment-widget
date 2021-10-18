@@ -7,9 +7,6 @@ function App({ domElement }) {
 
   return (
     <div className="App">
-    <p>
-          My favorite price is /r/{price}
-    </p>
       <Main domElement={domElement}/>
     </div>
   );
