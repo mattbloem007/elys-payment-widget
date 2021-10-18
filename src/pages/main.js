@@ -136,7 +136,7 @@ class Main extends Component {
                 <h3 style={{color: '#ed6f1b'}}>Title of Product: {title}</h3>
                 <p style={{color: '#ed6f1b'}}> ELYS (Price): {elysAmount}</p>
                 {body}
-                <ButtonForm />
+                
             </div>
         )
     }
