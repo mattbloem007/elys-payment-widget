@@ -21,7 +21,7 @@ function PaymentButton(props) {
                 fontWeight: 500,
                 color: '#231B17',
                 width: 190
-            }} onClick={props.pay}>Pay with ELYS <img src="//images.ctfassets.net/k5e22fb1pq4n/5Y3bIZDykC6sNVjvVGa44p/e9b938b853cba3e6667c3515b43f30dd/elyseos-logo-white-trans_32px.png" style={{ paddingLeft: '10px'}}/></button>
+            }} onClick={props.pay}>Pay with ELYS <img src="//images.ctfassets.net/k5e22fb1pq4n/3LXCv1bu6N4khKXGC6kAcB/fe51ca1ec93befa56c4095454ff573d1/Elyseos-logo-32x32.png" style={{ paddingLeft: '10px'}}/></button>
           )
       break;
 
@@ -106,7 +106,7 @@ function PaymentButton(props) {
               fontWeight: 500,
               color: '#231B17',
               width: 190
-          }} onClick={props.connect}>Connect Wallet <img src="//images.ctfassets.net/k5e22fb1pq4n/5Y3bIZDykC6sNVjvVGa44p/e9b938b853cba3e6667c3515b43f30dd/elyseos-logo-white-trans_32px.png" style={{ paddingLeft: '10px'}}/></button>
+          }} onClick={props.connect}>Connect Wallet <img src="//images.ctfassets.net/k5e22fb1pq4n/3LXCv1bu6N4khKXGC6kAcB/fe51ca1ec93befa56c4095454ff573d1/Elyseos-logo-32x32.png" style={{ paddingLeft: '10px'}}/></button>
       );
       break;
 
