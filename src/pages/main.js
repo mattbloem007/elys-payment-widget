@@ -16,6 +16,7 @@ class Main extends Component {
         loading: true,
         hasMetamask: false,
         success: false,
+        payLoading: "Pay with ELYS",
         elysToken: null,
         elysAmount: 0,
         elysPrice: {usd:0,ftm:0,loaded: false},
@@ -103,20 +104,23 @@ class Main extends Component {
     }
 
     pay = async () => {
+      this.setState({payLoading: "In Transaction..."})
       let { domElement } = this.props
       const title = domElement.getAttribute("product-title")
       const elysAmount = domElement.getAttribute("data-price")
       const target_address = domElement.getAttribute("merchant-wallet")
       console.log("Address: ", target_address)
        let accounts = await window.web3.eth.getAccounts();
+       let gasPrice = await window.web3.eth.getGasPrice();
+       console.log("GAS: ", gasPrice)
     	 this.state.elysToken.methods.transfer(target_address, this.state.elysAmount*1e5).send({
     	 	from: accounts[0],
     	 	gas: 450000,
-    	 	gasPrice: "123000000000"
+    	 	gasPrice: gasPrice
     	 })
-       .then(function(transactionHash){
+       .then((transactionHash) => {
          console.log("Transaction completed: ", transactionHash)
-         this.setState({txHash: transactionHash, success: true})
+         this.setState({txHash: transactionHash.transactionHash, success: true, payLoading: "Pay with ELYS"})
      	})
       // elysToken.methods.transfer(target_address, amount).send({
     	// 	from: res[0],
@@ -127,6 +131,11 @@ class Main extends Component {
       //   console.log("Transaction completed: ", transactionHash)
     	// })
     }
+
+    copyToClipboard = () => {
+      console.log("In copy")
+      navigator.clipboard.writeText(this.state.txHash);
+    }
     render = () => {
         let body = null
         let { domElement } = this.props
@@ -134,15 +143,15 @@ class Main extends Component {
         const elysAmount = domElement.getAttribute("data-price")
         const buttonColor = domElement.getAttribute("button-color")
         const instructions = domElement.getAttribute("instructions")
-        console.log("is Connected: ", this.state.isConnected)
+        console.log("is Connected: ", this.state.payLoading)
             if(this.state.hasMetamask && !this.state.isConnected){
                 body = (<IntroContainer>
                           <FeatureText> {this.state.elysAmount},000 ELYS</FeatureText>
-                            <PaymentButton elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
+                            <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
                             {
                               this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
-                                Your transaction was successful. Here is your txHash: {this.state.txHash}
-                                These are the details: {instructions}
+                              Your transaction was successful. Click here to copy your transaction Hash: <CopyText onClick={this.copyToClipboard}>{this.state.txHash}</CopyText>
+                              These are the details: {instructions}
                               </Alert>
                               :
                               null
@@ -155,10 +164,12 @@ class Main extends Component {
                 body=(
                   <IntroContainer>
                             <FeatureText> {this.state.elysAmount},000 ELYS</FeatureText>
-                              <PaymentButton elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
+                              <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
+                              <br/>
                               {
                                 this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
-                                  Your transaction was successful. Here is your txHash: {this.state.txHash}
+                                  Your transaction was successful. Click here to copy your transaction Hash: <CopyText onClick={this.copyToClipboard}>{this.state.txHash}</CopyText>
+                                  These are the details: {instructions}
                                 </Alert>
                                 :
                                 null
@@ -183,6 +194,15 @@ export default Main
     font-weight: 500;
     margin-bottom: 0px;
 
+  `
+
+  const CopyText = styled.p`
+    text-decoration: underline;
+    color: #EC7019;
+    :hover {
+        background-color: #facbac;
+        cursor: pointer;
+      }
   `
 
   const IntroContainer = styled.div`
