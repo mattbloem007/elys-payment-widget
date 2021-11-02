@@ -8,6 +8,7 @@ import contractAddress from '../crypto/contractAddress';
 import styled from "styled-components"
 import { Alert } from 'react-bootstrap';
 import detectEthereumProvider from '@metamask/detect-provider'
+import { BsClipboard } from "react-icons/bs";
 
 
 class Main extends Component {
@@ -57,7 +58,7 @@ class Main extends Component {
         let amount = elysAmount
         if (currency == "USD") {
           amount = (elysAmount / price.usd)
-          amount = Math.trunc(amount)
+          amount = Math.round(amount * 10) / 10
           this.setState({elysAmount: amount})
         }
         else {
@@ -146,11 +147,12 @@ class Main extends Component {
         console.log("is Connected: ", this.state.payLoading)
             if(this.state.hasMetamask && !this.state.isConnected){
                 body = (<IntroContainer>
-                          <FeatureText> {this.state.elysAmount},000 ELYS</FeatureText>
+                          <FeatureText> {this.state.elysAmount} ELYS</FeatureText>
                             <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
+                            <br/>
                             {
                               this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
-                              Your transaction was successful. Click here to copy your transaction Hash: <CopyText onClick={this.copyToClipboard}>{this.state.txHash}</CopyText>
+                              Your transaction was successful. Click here to copy your transaction Hash: <CopyText>{this.state.txHash}</CopyText> <BsClipboard style={{cursor: 'pointer'}} onClick={this.copyToClipboard} />
                               These are the details: {instructions}
                               </Alert>
                               :
@@ -163,12 +165,12 @@ class Main extends Component {
             } else {
                 body=(
                   <IntroContainer>
-                            <FeatureText> {this.state.elysAmount},000 ELYS</FeatureText>
+                            <FeatureText> {this.state.elysAmount} ELYS</FeatureText>
                               <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
                               <br/>
                               {
                                 this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
-                                  Your transaction was successful. Click here to copy your transaction Hash: <CopyText onClick={this.copyToClipboard}>{this.state.txHash}</CopyText>
+                                  Your transaction was successful. Click here to copy your transaction Hash:  <CopyText>{this.state.txHash}</CopyText><BsClipboard style={{cursor: 'pointer'}} onClick={this.copyToClipboard} />
                                   These are the details: {instructions}
                                 </Alert>
                                 :
@@ -197,7 +199,6 @@ export default Main
   `
 
   const CopyText = styled.p`
-    text-decoration: underline;
     color: #EC7019;
     :hover {
         background-color: #facbac;
