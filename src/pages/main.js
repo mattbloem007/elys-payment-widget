@@ -144,6 +144,7 @@ class Main extends Component {
         const elysAmount = domElement.getAttribute("data-price")
         const buttonColor = domElement.getAttribute("button-color")
         const instructions = domElement.getAttribute("instructions")
+        const ftmLink = "https://ftmscan.com/" + this.state.txHash
         console.log("is Connected: ", this.state.payLoading)
             if(this.state.hasMetamask && !this.state.isConnected){
                 body = (<IntroContainer>
@@ -152,8 +153,9 @@ class Main extends Component {
                             <br/>
                             {
                               this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
-                              Your transaction was successful. Click here to copy your transaction Hash: <CopyText>{this.state.txHash}</CopyText> <BsClipboard style={{cursor: 'pointer'}} onClick={this.copyToClipboard} />
-                              These are the details: {instructions}
+                              Your transaction was successful. Click here to see on fantom scan: <LinkContainer><CopyText href={ftmLink}>{ftmLink}</CopyText> <BsClipboard style={{cursor: 'pointer'}} onClick={this.copyToClipboard} /></LinkContainer>
+                              <br/>
+                              Seller instructions: {instructions}
                               </Alert>
                               :
                               null
@@ -170,8 +172,9 @@ class Main extends Component {
                               <br/>
                               {
                                 this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
-                                  Your transaction was successful. Click here to copy your transaction Hash:  <CopyText>{this.state.txHash}</CopyText><BsClipboard style={{cursor: 'pointer'}} onClick={this.copyToClipboard} />
-                                  These are the details: {instructions}
+                                  Your transaction was successful. Click here to see on fantom scan:  <LinkContainer><CopyText href={ftmLink}>{ftmLink}</CopyText><BsClipboard style={{cursor: 'pointer'}} onClick={this.copyToClipboard} /></LinkContainer>
+                                  <br/>
+                                  Seller instructions: {instructions}
                                 </Alert>
                                 :
                                 null
@@ -198,7 +201,7 @@ export default Main
 
   `
 
-  const CopyText = styled.p`
+  const CopyText = styled.a`
     color: #EC7019;
     :hover {
         background-color: #facbac;
@@ -209,4 +212,8 @@ export default Main
   const IntroContainer = styled.div`
     display: flex;
     flex-direction: column;
+  `
+
+  const LinkContainer = styled.div`
+    display: inline;
   `
