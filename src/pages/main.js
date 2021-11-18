@@ -8,7 +8,7 @@ import contractAddress from '../crypto/contractAddress';
 import styled from "styled-components"
 import { Alert } from 'react-bootstrap';
 import detectEthereumProvider from '@metamask/detect-provider'
-import { BsClipboard } from "react-icons/bs";
+import { FaRegCopy } from "react-icons/fa";
 
 
 class Main extends Component {
@@ -20,9 +20,11 @@ class Main extends Component {
         payLoading: "Pay with ELYS",
         elysToken: null,
         elysAmount: 0,
+        dollarAmount: 0,
         elysPrice: {usd:0,ftm:0,loaded: false},
         isConnected: false,
-        txHash: ""
+        txHash: "",
+        usdCurr: false,
     }
 
     checkMetamask = async () => {
@@ -59,7 +61,7 @@ class Main extends Component {
         if (currency == "USD") {
           amount = (elysAmount / price.usd)
           amount = Math.round(amount * 10) / 10
-          this.setState({elysAmount: amount})
+          this.setState({elysAmount: amount, dollarAmount: elysAmount, usdCurr: true})
         }
         else {
           this.setState({elysAmount: amount})
@@ -144,16 +146,21 @@ class Main extends Component {
         const elysAmount = domElement.getAttribute("data-price")
         const buttonColor = domElement.getAttribute("button-color")
         const instructions = domElement.getAttribute("instructions")
-        const ftmLink = "https://ftmscan.com/" + this.state.txHash
+        const ftmLink = "https://ftmscan.com/tx/" + this.state.txHash
         console.log("is Connected: ", this.state.payLoading)
             if(this.state.hasMetamask && !this.state.isConnected){
                 body = (<IntroContainer>
-                          <FeatureText> {this.state.elysAmount} ELYS</FeatureText>
+
+                          {
+                            this.state.usdCurr ? <FeatureText>${this.state.dollarAmount} ({this.state.elysAmount} ELYS)</FeatureText>
+                            :
+                            <FeatureText> {this.state.elysAmount} ELYS</FeatureText>
+                          }
                             <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
                             <br/>
                             {
                               this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
-                              Your transaction was successful. Click here to see on fantom scan: <LinkContainer><CopyText href={ftmLink}>{ftmLink}</CopyText> <BsClipboard style={{cursor: 'pointer'}} onClick={this.copyToClipboard} /></LinkContainer>
+                              Your transaction was successful. Click here to see on fantom scan: <LinkContainer><CopyText href={ftmLink}>{ftmLink}</CopyText>&nbsp;&nbsp;<FaRegCopy style={{cursor: 'pointer'}} onClick={this.copyToClipboard} /></LinkContainer>
                               <br/>
                               Seller instructions: {instructions}
                               </Alert>
@@ -167,12 +174,16 @@ class Main extends Component {
             } else {
                 body=(
                   <IntroContainer>
-                            <FeatureText> {this.state.elysAmount} ELYS</FeatureText>
+                        {
+                          this.state.usdCurr ? <FeatureText>${this.state.dollarAmount} ({this.state.elysAmount} ELYS)</FeatureText>
+                          :
+                          <FeatureText> {this.state.elysAmount} ELYS</FeatureText>
+                        }
                               <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
                               <br/>
                               {
                                 this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
-                                  Your transaction was successful. Click here to see on fantom scan:  <LinkContainer><CopyText href={ftmLink}>{ftmLink}</CopyText><BsClipboard style={{cursor: 'pointer'}} onClick={this.copyToClipboard} /></LinkContainer>
+                                  Your transaction was successful. Click here to see on fantom scan:  <LinkContainer><CopyText href={ftmLink}>{ftmLink}</CopyText>&nbsp;&nbsp;<FaRegCopy style={{cursor: 'pointer'}} onClick={this.copyToClipboard} /></LinkContainer>
                                   <br/>
                                   Seller instructions: {instructions}
                                 </Alert>
