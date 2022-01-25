@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Web3 from "web3";
 import PaymentButton from '../components/paymentButton'
+import DonateButton from '../components/donateButton'
 import ButtonForm from '../components/paymentButtonForm'
 import elysPrice from '../lib/elysPrice'
 import abi from '../crypto/uniswapV2PairABI.js';
@@ -147,6 +148,17 @@ class Main extends Component {
         const buttonColor = domElement.getAttribute("button-color")
         const instructions = domElement.getAttribute("instructions")
         const ftmLink = "https://ftmscan.com/tx/" + this.state.txHash
+        let pluginButton = (
+          <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
+
+        )
+        if (buttonColor == "dWhite" || buttonColor == "dOrange" || buttonColor == "dBrown") {
+
+          pluginButton = (
+            <DonateButton payLoading="Donate ELYS" elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
+          )
+          console.log("Here", pluginButton)
+        }
         console.log("is Connected: ", this.state.payLoading)
             if(this.state.hasMetamask && !this.state.isConnected){
                 body = (<IntroContainer>
@@ -156,7 +168,7 @@ class Main extends Component {
                             :
                             <FeatureText> {this.state.elysAmount} ELYS</FeatureText>
                           }
-                            <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
+                            {pluginButton}
                             <br/>
                             {
                               this.state.success ? <Alert variant="success" style={{margin:"auto"}}>
@@ -179,7 +191,7 @@ class Main extends Component {
                           :
                           <FeatureText> {this.state.elysAmount} ELYS</FeatureText>
                         }
-                              <PaymentButton payLoading={this.state.payLoading} elysAmount={this.state.elysAmount} buttonColor={buttonColor} pay={this.pay} connect={this.connect} isConnected={this.state.isConnected}/>
+                              {pluginButton}                              
                               <br/>
                               {
                                 this.state.success ? <Alert variant="success" style={{margin:"auto"}}>

@@ -21,7 +21,7 @@ function PaymentButton(props) {
                 fontWeight: 500,
                 color: '#231B17',
                 width: 190
-            }} onClick={props.pay}>{props.payLoading}<img src="//images.ctfassets.net/k5e22fb1pq4n/3LXCv1bu6N4khKXGC6kAcB/fe51ca1ec93befa56c4095454ff573d1/Elyseos-logo-32x32.png" style={{ paddingLeft: '10px'}}/></button>
+            }} onClick={props.pay}>{props.payLoading}<img src="//images.ctfassets.net/k5e22fb1pq4n/66GWs7Nec3spWZXEgvOdYI/c46885fb484a2eb650cbf33124dc90c3/Elyseos_Logo_Transparent.png?w=800&q=50" style={{ paddingLeft: '10px'}}/></button>
           )
       break;
 
@@ -106,7 +106,7 @@ function PaymentButton(props) {
               fontWeight: 500,
               color: '#231B17',
               width: 190
-          }} onClick={props.connect}>Connect Wallet <img src="//images.ctfassets.net/k5e22fb1pq4n/3LXCv1bu6N4khKXGC6kAcB/fe51ca1ec93befa56c4095454ff573d1/Elyseos-logo-32x32.png" style={{ paddingLeft: '10px'}}/></button>
+          }} onClick={props.connect}>Connect Wallet <img src="//images.ctfassets.net/k5e22fb1pq4n/66GWs7Nec3spWZXEgvOdYI/c46885fb484a2eb650cbf33124dc90c3/Elyseos_Logo_Transparent.png?w=800&q=50" style={{ paddingLeft: '10px'}}/></button>
       );
       break;
 
